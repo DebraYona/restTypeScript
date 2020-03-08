@@ -1,5 +1,5 @@
 {
-  "name": "restTypescript",
+  "name": "resttypescript",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,6 +16,10 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "@types/mongoose": "^5.7.3",
+    "@types/morgan": "^1.9.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.3",
+    "morgan": "^1.9.1"
   }
 }
