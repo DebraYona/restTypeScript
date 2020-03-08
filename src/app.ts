@@ -1,19 +1,26 @@
 import express , {Application}  from 'express';
 import morgan from 'morgan'; 
-import authRoutes from './routes/auth'
+import bodyParser from 'body-parser';
+
+//import appliRoutes from './routes/index'
+import appliRoutes from './routes/index'
 
 const app:Application= express();
 
 //setting
 
 app.set('port', 4000);
-
-//routes
-
-app.use(authRoutes)
-
 //middlewares
+app.use(bodyParser.json());
+
+
 app.use(morgan('dev'));
+//routes
+appliRoutes(app)
+//app.use(appliRoutes)
+
+
+
 
 
 export  default app

@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importDefault(require("mongoose"));
 mongoose_1.default.connect('mongodb://localhost/test', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
     .then(function (db) { return console.log("database is connected"); })
     .catch(function (err) { return console.log(err); });
