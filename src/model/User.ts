@@ -32,8 +32,8 @@ userSchema.methods.encryptPassword = async (password:string): Promise<string> =>
     return bcrypt.hash(password, salt);
 }
 //alcance
-userSchema.methods.validatePassword = function(password:string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
+userSchema.methods.validatePassword = async function(password:string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
 }
 
 const user = model<IUser>('User', userSchema);

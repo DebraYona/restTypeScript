@@ -42,24 +42,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var User_1 = __importDefault(require("../model/User"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.singup = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, _a, savedUser, token;
+    var user, newUser, _a, savedUser, token;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                user = new User_1.default({
-                    username: req.body.username,
-                    email: req.body.email,
-                    password: req.body.password
-                });
-                _a = user;
-                return [4 /*yield*/, user.encryptPassword(user.password)];
+                if (!req.body.email || !req.body.password) {
+                    return [2 /*return*/, res.status(400).json({ msg: "madar email y password" })];
+                }
+                return [4 /*yield*/, User_1.default.findOne({ email: req.body.email })];
             case 1:
-                _a.password = _b.sent();
-                return [4 /*yield*/, user.save()];
+                user = _b.sent();
+                if (user) {
+                    return [2 /*return*/, res.status(400).json({ msg: "este usuario ya exste" })];
+                }
+                newUser = new User_1.default(
+                /*  {
+                  username: req.body.username,
+                  email: req.body.email,
+                  password: req.body.password
+              }*/ req.body);
+                _a = newUser;
+                return [4 /*yield*/, newUser.encryptPassword(newUser.password)];
             case 2:
+                _a.password = _b.sent();
+                return [4 /*yield*/, newUser.save()];
+            case 3:
                 savedUser = _b.sent();
                 token = jsonwebtoken_1.default.sign({ _id: savedUser._id }, process.env.TOKEN_SECRET || 'tokentest');
-                res.header('auth_token', token).json(user);
+                res.header('auth_token', token).json(newUser);
                 return [2 /*return*/];
         }
     });
@@ -85,6 +95,20 @@ exports.singin = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.profile = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, User_1.default.findById(req.userId, { password: 0 })];
+            case 1:
+                user = _a.sent();
+                if (!user)
+                    return [2 /*return*/, res.status(404).json("No user found")];
+                res.json(user);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updatePassword = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {

@@ -72,7 +72,14 @@ userSchema.methods.encryptPassword = function (password) { return __awaiter(void
 }); };
 //alcance
 userSchema.methods.validatePassword = function (password) {
-    return bcryptjs_1.default.compare(password, this.password);
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, bcryptjs_1.default.compare(password, this.password)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        });
+    });
 };
 var user = mongoose_1.model('User', userSchema);
 exports.default = user;
