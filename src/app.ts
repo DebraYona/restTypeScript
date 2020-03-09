@@ -9,7 +9,7 @@ const app:Application= express();
 
 //setting
 
-app.set('port', 4000);
+app.set('port', 4400);
 //middlewares
 app.use(bodyParser.json());
 

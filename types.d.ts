@@ -3,3 +3,7 @@ declare namespace  Express {
         userId:string;
     }
 }
+
+/* declare function require(regex-escape:string) {
+    const regex-escape= require(regex-escape)
+} */

@@ -10,7 +10,7 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var index_1 = __importDefault(require("./routes/index"));
 var app = express_1.default();
 //setting
-app.set('port', 4000);
+app.set('port', 4400);
 //middlewares
 app.use(body_parser_1.default.json());
 app.use(morgan_1.default('dev'));

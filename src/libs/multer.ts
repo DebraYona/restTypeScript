@@ -1,6 +1,6 @@
-import multer from 'multer';
+/* import multer from 'multer';
 import uuid from 'uuid/v4';
-import path from 'path';
+import path from 'path'; */
 
 /*multer.diskStorage({
     destination: 'uploads',
