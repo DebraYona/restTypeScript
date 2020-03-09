@@ -1,4 +1,4 @@
-import  {Response, Request } from 'express'
+import  {Response, Request, NextFunction } from 'express'
 import Product , {IProduct} from '../model/Product'
 //const  escapeRegex = require('')             
 
@@ -21,7 +21,25 @@ export const addProducts = async(req:Request, res:Response) =>{
     res.status(200).json({msg: "ok"});
 }
 
-export const products = async (req:Request, res:Response) => {
+export const products = async (req:Request, res:Response, next:NextFunction) => {
+        let perPage =9;
+        const page =( req.params.page || 1);
+
+        Product.find({})
+        .skip((perPage *Number(page))- perPage)
+        .limit(perPage)
+        .exec((err, products)=> {
+            Product.count(( count:Number) =>{
+                if(err) return next(err);
+                res.status(200).json({
+                    products:products ,
+                    currentPage:page,
+                    pages:Math.ceil(Number(count) / perPage)
+    
+                })
+            })
+            
+        })
   /*   const resPerPage = 9; // results per page
     const page =( req.params.page || 1); // Page 
     try{

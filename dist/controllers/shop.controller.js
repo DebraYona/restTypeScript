@@ -69,8 +69,25 @@ exports.addProducts = function (req, res) { return __awaiter(void 0, void 0, voi
         }
     });
 }); };
-exports.products = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+exports.products = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var perPage, page;
     return __generator(this, function (_a) {
+        perPage = 9;
+        page = (req.params.page || 1);
+        Product_1.default.find({})
+            .skip((perPage * Number(page)) - perPage)
+            .limit(perPage)
+            .exec(function (err, products) {
+            Product_1.default.count(function (count) {
+                if (err)
+                    return next(err);
+                res.status(200).json({
+                    products: products,
+                    currentPage: page,
+                    pages: Math.ceil(Number(count) / perPage)
+                });
+            });
+        });
         /*   const resPerPage = 9; // results per page
           const page =( req.params.page || 1); // Page
           try{
